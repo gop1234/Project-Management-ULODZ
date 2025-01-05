@@ -8,7 +8,7 @@
       <Button layoutX="343.0" layoutY="63.0" mnemonicParsing="false" text="advance" />
       <Button layoutX="513.0" layoutY="63.0" mnemonicParsing="false" text="Retreat" />
       <Button layoutX="345.0" layoutY="161.0" mnemonicParsing="false" text="New ticket" />
-      <Label layoutX="343.0" layoutY="28.0" prefHeight="18.0" prefWidth="222.0" text="Selected Task" />
+      <Label fx:id="selectTask" layoutX="343.0" layoutY="28.0" prefHeight="18.0" prefWidth="222.0" text="Selected Task" />
       <ChoiceBox layoutX="416.0" layoutY="106.0" prefWidth="150.0" />
       <TextArea editable="false" layoutX="345.0" layoutY="239.0" prefHeight="67.0" prefWidth="210.0" />
       <Label layoutX="343.0" layoutY="110.0" prefHeight="18.0" prefWidth="88.0" text="Tikets" />
