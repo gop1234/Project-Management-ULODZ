@@ -13,7 +13,7 @@
    <AnchorPane prefHeight="383.0" prefWidth="416.0">
       <children>
           <Button layoutX="35.0" layoutY="222.0" onAction="#onNewButtonClick" text="New" />
-         <Button layoutX="134.0" layoutY="222.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="Delete" />
+         <Button layoutX="127.0" layoutY="222.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="Delete" />
          <Button layoutX="339.0" layoutY="222.0" mnemonicParsing="false" onAction="#onOpenButtonClick" text="Open" />
          <TabPane fx:id="projectTabPane" prefHeight="200.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" />
          <Label layoutY="256.0" text="Name:" />

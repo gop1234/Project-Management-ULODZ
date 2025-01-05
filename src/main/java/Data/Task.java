@@ -1,7 +1,8 @@
 package Data;
 
+import java.util.ArrayList;
 import java.util.Date;
-import Data.Status;
+import java.util.Objects;
 
 public class Task {
     private String name;
@@ -10,10 +11,15 @@ public class Task {
     private Date endDate;
     private int duration;
     private Status status;
+    private int nIssues = 0;
+
+    private ArrayList<Issue> issues;
 
     public Task(Status s,String name) {
         this.status=s;
         this.name=name;
+        this.nIssues=0;
+        this.issues=new ArrayList<Issue>();
     }
     @Override
     public String toString(){
@@ -26,6 +32,21 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void nextStatus(){
+        switch(this.status){
+            case Todo -> {this.status=Status.Ongoing;}
+            case Ongoing -> {this.status=Status.Finished;}
+        }
+    }
+
+    public void previusStatus(){
+        switch(this.status){
+            case Finished -> {this.status=Status.Ongoing;}
+            case Ongoing -> {this.status=Status.Todo;}
+        }
+
     }
 
     public Date getStartDate() {
@@ -58,5 +79,24 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getnIssues() {
+        return nIssues;
+    }
+
+    public void addIssues(Issue i) {
+        this.nIssues++;
+        this.issues.add(i);
+    }
+
+    public void deleteIssue(Issue i){
+        if(nIssues<=0)return;
+        nIssues--;
+        this.issues.remove(i);
+    }
+
+    public ArrayList<Issue> getIssues() {
+        return issues;
     }
 }

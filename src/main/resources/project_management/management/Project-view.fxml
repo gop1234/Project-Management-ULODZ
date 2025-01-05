@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.ProjectController">
    <children>
       <TabPane fx:id="generalTab" layoutY="33.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" />
-      <Button layoutX="534.0" layoutY="450.0" mnemonicParsing="false" onAction="#onGoBackButtonCLick" text="Go Back" />
+      <Button layoutX="526.0" layoutY="445.0" mnemonicParsing="false" onAction="#onGoBackButtonCLick" text="Go Back" />
       <Label fx:id="projectName" layoutX="150.0" layoutY="5.0" prefHeight="27.0" prefWidth="280.0" text="Project:">
          <font>
             <Font size="18.0" />
