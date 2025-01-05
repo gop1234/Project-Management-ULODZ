@@ -2,6 +2,10 @@ package Data;
 
 import java.util.ArrayList;
 
+
+/**
+ * Singleton
+ * Use to store all data project user everything*/
 public class DataController {
     private static DataController instance;
 
