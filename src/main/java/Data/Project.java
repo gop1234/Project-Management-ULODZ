@@ -7,7 +7,7 @@ import java.util.List;
 public class Project {
     private String name;
     private String description;
-    private List tasks;
+    private List<Task> tasks;
     private float price;
 
 
@@ -26,7 +26,7 @@ public class Project {
         this.name = name;
     }
 
-    public List getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
