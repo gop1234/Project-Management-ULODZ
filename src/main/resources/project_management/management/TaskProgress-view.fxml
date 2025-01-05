@@ -5,21 +5,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.TaskProgressController">
    <children>
-      <TableView layoutX="38.0" layoutY="23.0" prefHeight="354.0" prefWidth="286.0">
-        <columns>
-          <TableColumn fx:id="toDo" editable="false" prefWidth="95.20001602172852" sortable="false" text="To do" />
-          <TableColumn fx:id="onGoing" editable="false" prefWidth="84.79998779296875" sortable="false" text="On going" />
-            <TableColumn fx:id="finished" editable="false" prefWidth="106.40000915527344" sortable="false" text="Finished" />
-        </columns>
-      </TableView>
       <Button layoutX="343.0" layoutY="63.0" mnemonicParsing="false" text="advance" />
       <Button layoutX="513.0" layoutY="63.0" mnemonicParsing="false" text="Retreat" />
       <Button layoutX="345.0" layoutY="161.0" mnemonicParsing="false" text="New ticket" />
-      <Label layoutX="343.0" layoutY="28.0" prefHeight="18.0" prefWidth="222.0" text="Selected Task" />
+      <Label fx:id="selectTask" layoutX="343.0" layoutY="28.0" prefHeight="18.0" prefWidth="222.0" text="Selected Task" />
       <ChoiceBox layoutX="416.0" layoutY="106.0" prefWidth="150.0" />
       <TextArea editable="false" layoutX="345.0" layoutY="239.0" prefHeight="67.0" prefWidth="210.0" />
       <Label layoutX="343.0" layoutY="110.0" prefHeight="18.0" prefWidth="88.0" text="Tikets" />
       <Button layoutX="473.0" layoutY="161.0" mnemonicParsing="false" text="Close Ticket" />
       <Label layoutX="345.0" layoutY="211.0" prefHeight="18.0" prefWidth="107.0" text="Ticket Description" />
+      <ListView fx:id="toDo" layoutX="14.0" layoutY="46.0" prefHeight="323.0" prefWidth="107.0" />
+      <ListView fx:id="onGoing" layoutX="122.0" layoutY="46.0" prefHeight="323.0" prefWidth="107.0" />
+      <ListView fx:id="finished" layoutX="229.0" layoutY="46.0" prefHeight="323.0" prefWidth="95.0" />
+      <Label layoutX="54.0" layoutY="28.0" text="Todo" />
+      <Label layoutX="152.0" layoutY="28.0" text="Ongoing" />
+      <Label layoutX="255.0" layoutY="28.0" text="Finished" />
    </children>
 </AnchorPane>
