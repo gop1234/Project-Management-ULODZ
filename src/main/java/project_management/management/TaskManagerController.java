@@ -17,6 +17,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import java.time.LocalDate;
+import javafx.scene.control.*;
+import Data.Card;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class TaskManagerController {
 
@@ -29,55 +36,95 @@ public class TaskManagerController {
     private Button edit;
     @FXML
     private FlowPane cardsContainer; // Contenedor de cartas
-    @FXML private Button addCardButton; // Botón para agregar nuevas cartas
 
-    private ObservableList<Task> taskList;
+
+    // Método para añadir una carta con título
+    @FXML
+    private void addCard() {
+        VBox card = new VBox(10);
+        card.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-pref-width: 150px; -fx-pref-height: 200px;");
+
+        TextField titleField = new TextField();
+        titleField.setPromptText("Introduce el título de la carta");
+        titleField.setStyle("-fx-font-size: 10px; -fx-pref-width: 100px;");
+
+
+        Button addTaskButton = new Button("Añadir Tarjeta");
+        addTaskButton.setStyle("-fx-font-size: 6px;");
+        addTaskButton.setOnAction(e -> addTask(card));
+
+        card.getChildren().addAll(titleField, addTaskButton);
+        cardsContainer.getChildren().add(card);
+    }
+
+    // Método para añadir una tarjeta dentro de la carta
+    private void addTask(VBox card) {
+        // Crear una nueva tarjeta (objeto Card)
+        Card newCard = new Card("Nueva Tarjeta");
+
+        // Crear un botón para la tarjeta
+        Button taskButton = newCard.getButton();
+        taskButton.setStyle("-fx-font-size: 9px;");
+
+        // Acción al hacer doble clic sobre la tarjeta
+        taskButton.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                openCardDetails(newCard);
+            }
+        });
+
+        // Añadir la tarjeta al contenedor de la carta
+        card.getChildren().add(taskButton);
+    }
+
+    // Método para abrir los detalles de la tarjeta
+    private void openCardDetails(Card card) {
+        // Crear un VBox para los detalles de la tarjeta
+        VBox detailsBox = new VBox(10);
+        detailsBox.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 250px; -fx-pref-height: 300px;");
+
+        // Mostrar los detalles de la tarjeta
+        TextField nameField = new TextField(card.getName());
+        nameField.setPromptText("Nombre de la tarjeta");
+
+        TextArea descriptionArea = new TextArea(card.getDescription());
+        descriptionArea.setPromptText("Descripción");
+
+        //DatePicker creationDatePicker = new DatePicker(card.getCreationDate());
+        //creationDatePicker.setEditable(false);
+        //creationDatePicker.setMouseTransparent(true);  // Esto hace que el DatePicker no sea interactivo con el ratón
+
+        Label creationDateLabel = new Label("Fecha de creación: " + card.getCreationDate().toString());
+        creationDateLabel.setStyle("-fx-font-size: 12px;");
+
+        DatePicker expirationDatePicker = new DatePicker(card.getExpirationDate());
+        expirationDatePicker.setOnAction(e -> {
+            card.setExpirationDate(expirationDatePicker.getValue());
+            card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
+        });
+
+        Label durationLabel = new Label("Duración: " + card.getDuration() + " días");
+
+        Button saveButton = new Button("Guardar");
+        saveButton.setOnAction(e -> {
+            card.setName(nameField.getText());
+            card.setDescription(descriptionArea.getText());
+
+        });
+
+        // Añadir los elementos al VBox
+        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel, expirationDatePicker, durationLabel, saveButton);
+
+        // Mostrar la ventana emergente
+        Stage stage = new Stage();
+        Scene scene = new Scene(detailsBox);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 
     /*
-
-
-    // Método para agregar una nueva carta
-    @FXML
-    private void addNewCard() {
-        // Crear una nueva carta
-        VBox newCard = new VBox(10); // Espacio de 10 entre elementos
-        newCard.setStyle("-fx-background-color: lightgray; -fx-padding: 10;");
-
-        // Crear un TextField para que el usuario ingrese el nombre de la tarjeta
-        TextField cardTextField = new TextField();
-        cardTextField.setPromptText("Ingrese nombre de la tarjeta");
-
-        // Crear un contenedor para las tarjetas dentro de esta carta
-        VBox cardCardsContainer = new VBox(5); // Espacio de 5 entre tarjetas
-        cardCardsContainer.setStyle("-fx-background-color: white; -fx-padding: 10;");
-
-        // Crear un botón para añadir tarjetas a esta carta
-        Button addCardButton = new Button("Añadir tarjeta");
-        addCardButton.setOnAction(e -> addCardToCard(cardCardsContainer, cardTextField));
-
-        // Añadir el campo de texto y el botón a la carta
-        newCard.getChildren().addAll(cardTextField, addCardButton, cardCardsContainer);
-
-        // Añadir la nueva carta al contenedor principal
-        cardsContainer.getChildren().add(newCard);
-    }
-
-    // Método para añadir una tarjeta dentro de una carta
-    private void addCardToCard(VBox cardCardsContainer, TextField cardTextField) {
-        String cardName = cardTextField.getText();
-        if (!cardName.isEmpty()) {
-            // Crear una tarjeta como un Label
-            Label newCard = new Label(cardName);
-            newCard.setStyle("-fx-background-color: lightblue; -fx-padding: 5px;");
-            // Añadir la tarjeta al contenedor de tarjetas dentro de la carta
-            cardCardsContainer.getChildren().add(newCard);
-            // Limpiar el campo de texto
-            cardTextField.clear();
-        }
-    }
-
-     */
-
     // Método para añadir una carta con título
     @FXML
     private void addCard() {
@@ -112,4 +159,9 @@ public class TaskManagerController {
         // Añadir la tarjeta a la carta
         card.getChildren().add(taskField);
     }
+    */
+
+
+
+
 }
