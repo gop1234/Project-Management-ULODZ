@@ -17,7 +17,7 @@ public class ProjectTabController {
     private int tabId;
 
     public void setTabContent(int Id, Project p){
-        this.project=project;
+        this.project=p;
         this.tabId= Id;
         nameLabel.setText("Project name: " + p.getName());
         priceLabel.setText("Price"+ p.getPrice());

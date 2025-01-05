@@ -50,7 +50,20 @@ public class ProjectController {
         AnchorPane tabContent = loader.load();
         ProjectTabController tabController = loader.getController();
         tabController.setTabContent(tabCounter,p);
-        Tab newTab = new Tab(projectName.getText(),tabContent);
+        Tab newTab = new Tab("Resume",tabContent);
+        generalTab.getTabs().add(newTab);
+
+
+        loader = new FXMLLoader(getClass().getResource("TaskManager-view.fxml"));
+        tabContent = loader.load();
+        newTab = new Tab("Task Manager",tabContent);
+        generalTab.getTabs().add(newTab);
+
+        loader = new FXMLLoader(getClass().getResource("TaskProgress-view.fxml"));
+        tabContent = loader.load();
+        TaskProgressController TPController = loader.getController();
+        TPController.loadWindow(p);
+        newTab = new Tab("Task Traking",tabContent);
         generalTab.getTabs().add(newTab);
     }
 }

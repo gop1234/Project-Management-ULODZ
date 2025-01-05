@@ -1,10 +1,8 @@
 package Data;
 
 import java.util.Date;
+import Data.Status;
 
-enum Status{
-    Todo, Ongoing, Finished
-}
 public class Task {
     private String name;
     private String description;
@@ -12,6 +10,15 @@ public class Task {
     private Date endDate;
     private int duration;
     private Status status;
+
+    public Task(Status s,String name) {
+        this.status=s;
+        this.name=name;
+    }
+    @Override
+    public String toString(){
+        return name;
+    }
 
     public Status getStatus() {
         return status;
