@@ -27,7 +27,7 @@ public class TaskProgressController {
     @FXML
     private TextArea issueDesciption;
     @FXML
-    private ChoiceBox<Issue> issues;
+    private ComboBox<Issue> issues;
 
 
     public void update(){
@@ -35,15 +35,16 @@ public class TaskProgressController {
             System.out.println("Es null ");
             return;
         }
+        this.numberIssues.setText("Issues:" + selectedTask.getnIssues());
         if(selectedIssue == null){
             this.issueName.setText("");
             this.issueDesciption.setText("");
-            this.numberIssues.setText("Issues:" + selectedTask.getIssues());
+
         }
         selectTask.setText("Selected task: " + selectedTask.getName());
-        if(!issues.getItems().isEmpty()){
+        /*if(!issues.getItems().isEmpty()){
             issues.getItems().removeAll(issues.getItems());
-        }
+        }*/
         for(Issue i : selectedTask.getIssues()){
             issues.getItems().add(i);
         }
@@ -55,7 +56,6 @@ public class TaskProgressController {
             switch((t.getStatus())){
                 case Todo -> toDo.getItems().add(t);
                 case Ongoing ->  onGoing.getItems().add(t);
-
                 case Finished -> finished.getItems().add(t);
 
             }
@@ -112,7 +112,26 @@ public class TaskProgressController {
     public void oncloseIssueButtonClicked(){
         if(selectedIssue!=null){
             selectedTask.deleteIssue(selectedIssue);
+            selectedIssue=null;
+            issues.getSelectionModel().clearSelection();
+            update();
         }
+    }
+
+    @FXML
+    public void onSaveButtonClicked(){
+        if(issueName.getText().isEmpty() || issueDesciption.getText().isEmpty()) return;
+        Issue i = new Issue(issueName.getText());
+        i.setDescription(issueDesciption.getText());
+        selectedTask.addIssues(i);
+        update();
+    }
+    @FXML
+    public void onIssuesclicked(){
+        selectedIssue=issues.getSelectionModel().getSelectedItem();
+        issueName.setText(selectedIssue.getName());
+        issueDesciption.setText(selectedIssue.getDescription());
+        issues.getSelectionModel().clearSelection();
     }
     public void loadWindow(Project p){
         this.project = p;

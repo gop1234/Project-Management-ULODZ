@@ -7,12 +7,11 @@
    <children>
       <Button layoutX="343.0" layoutY="63.0" mnemonicParsing="false" onAction="#onAdvanceButtonClicked" text="advance" />
       <Button layoutX="513.0" layoutY="63.0" mnemonicParsing="false" onAction="#onPreviusButtonClicked" text="Retreat" />
-      <Button layoutX="501.0" layoutY="171.0" mnemonicParsing="false" text="New Issue" />
+      <Button layoutX="510.0" layoutY="171.0" mnemonicParsing="false" onAction="#onNewIssueButtonClicked" text="Clear" />
       <Label fx:id="selectTask" layoutX="343.0" layoutY="28.0" prefHeight="18.0" prefWidth="222.0" text="Selected Task" />
-      <ChoiceBox layoutX="416.0" layoutY="106.0" prefWidth="150.0" />
-      <TextArea editable="false" layoutX="345.0" layoutY="239.0" prefHeight="67.0" prefWidth="210.0" />
-      <Label layoutX="343.0" layoutY="110.0" prefHeight="18.0" prefWidth="88.0" text="Issues" />
-      <Button layoutX="347.0" layoutY="334.0" mnemonicParsing="false" text="Close Issue" />
+      <TextArea fx:id="issueDesciption" layoutX="345.0" layoutY="239.0" prefHeight="67.0" prefWidth="210.0" />
+      <Label fx:id="numberIssues" layoutX="343.0" layoutY="110.0" prefHeight="18.0" prefWidth="88.0" text="Issues" />
+      <Button layoutX="347.0" layoutY="334.0" mnemonicParsing="false" onAction="#oncloseIssueButtonClicked" text="Close Issue" />
       <Label layoutX="345.0" layoutY="211.0" prefHeight="18.0" prefWidth="107.0" text="Issue Description" />
       <ListView fx:id="toDo" layoutX="14.0" layoutY="46.0" onMouseClicked="#onToDoClicked" prefHeight="323.0" prefWidth="107.0" />
       <ListView fx:id="onGoing" layoutX="122.0" layoutY="46.0" onMouseClicked="#onOnGoingClicked" prefHeight="323.0" prefWidth="107.0" />
@@ -20,7 +19,8 @@
       <Label layoutX="54.0" layoutY="28.0" text="Todo" />
       <Label layoutX="152.0" layoutY="28.0" text="Ongoing" />
       <Label layoutX="255.0" layoutY="28.0" text="Finished" />
-      <TextField editable="false" layoutX="341.0" layoutY="171.0" />
-      <Button layoutX="479.0" layoutY="334.0" mnemonicParsing="false" text="Save Issue" />
+      <TextField fx:id="issueName" layoutX="341.0" layoutY="171.0" />
+      <Button layoutX="479.0" layoutY="334.0" mnemonicParsing="false" onAction="#onSaveButtonClicked" text="Save Issue" />
+      <ComboBox fx:id="issues" layoutX="399.0" layoutY="106.0" onAction="#onIssuesclicked" prefHeight="26.0" prefWidth="170.0" />
    </children>
 </AnchorPane>
