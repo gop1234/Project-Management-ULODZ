@@ -7,6 +7,7 @@ import java.util.List;
 public class Project {
     private String Name;
     private List tasks;
+    private float price;
 
 
     public Project(String name) {
@@ -28,5 +29,13 @@ public class Project {
 
     public void setTasks(List tasks) {
         this.tasks = tasks;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

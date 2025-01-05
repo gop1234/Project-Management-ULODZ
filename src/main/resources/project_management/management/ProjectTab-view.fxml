@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="332.0" prefWidth="336.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.ProjectTabController">
+   <children>
+      <Label fx:id="nameLabel" layoutX="33.0" layoutY="36.0" prefHeight="28.0" prefWidth="227.0" text="Project name:" />
+      <Label fx:id="priceLabel" layoutX="33.0" layoutY="91.0" prefHeight="18.0" prefWidth="236.0" text="Price:" />
+   </children>
+</AnchorPane>

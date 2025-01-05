@@ -2,10 +2,11 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.ProjectController">
    <children>
-      <TabPane prefHeight="364.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="33.0" prefHeight="331.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Trello">
             <content>
@@ -20,5 +21,9 @@
         </tabs>
       </TabPane>
       <Button layoutX="534.0" layoutY="364.0" mnemonicParsing="false" onAction="#onGoBackButtonCLick" text="Go Back" />
+      <Label fx:id="projectName" layoutX="150.0" layoutY="5.0" prefHeight="27.0" prefWidth="280.0" text="Project:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
    </children>
 </AnchorPane>
