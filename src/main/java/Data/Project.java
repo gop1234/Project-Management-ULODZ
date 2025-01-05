@@ -5,22 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
-    private String Name;
+    private String name;
+    private String description;
     private List tasks;
     private float price;
 
 
     public Project(String name) {
-        Name = name;
+        this.name = name;
         tasks = new ArrayList<>();
+        description ="";
+        price =0;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public List getTasks() {
@@ -37,5 +40,13 @@ public class Project {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

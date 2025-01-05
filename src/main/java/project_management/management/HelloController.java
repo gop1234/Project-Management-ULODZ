@@ -70,7 +70,7 @@ public class HelloController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Project-view.fxml"));
         parent = loader.load();
         ProjectController controller = loader.getController();
-        controller.setProject(DataController.getInstance().getProjetcs().get(projectTabPane.getSelectionModel().getSelectedIndex()));
+        controller.loadWindow(DataController.getInstance().getProjetcs().get(projectTabPane.getSelectionModel().getSelectedIndex()));
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(parent);
         stage.setScene(scene);

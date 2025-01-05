@@ -8,6 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +24,9 @@ public class ProjectController {
 
     @FXML
     private Label projectName;
+    @FXML
+    private TabPane generalTab;
+    int tabCounter=1;
 
     @FXML
     protected void onGoBackButtonCLick(ActionEvent e) throws IOException {
@@ -34,8 +40,17 @@ public class ProjectController {
         stage.show();
     }
 
-    public void setProject(Project p) {
+
+    /**
+     *Function that must run when loading the window*/
+    public void loadWindow(Project p) throws IOException{
         this.project = p;
         projectName.setText(project.getName());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProjectTab-view.fxml"));
+        AnchorPane tabContent = loader.load();
+        ProjectTabController tabController = loader.getController();
+        tabController.setTabContent(tabCounter,p);
+        Tab newTab = new Tab(projectName.getText(),tabContent);
+        generalTab.getTabs().add(newTab);
     }
 }
