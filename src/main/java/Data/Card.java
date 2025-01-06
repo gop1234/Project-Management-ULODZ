@@ -2,6 +2,7 @@ package Data;
 
 import java.time.LocalDate;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 public class Card {
     private String name;
@@ -10,6 +11,8 @@ public class Card {
     private LocalDate expirationDate;
     private long duration; // en días
     private Button button;  // El botón asociado a la tarjeta
+    private Button buttonSave;
+    private Button buttonDelete;
 
     // Constructor
     public Card(String name) {
@@ -18,6 +21,8 @@ public class Card {
         this.expirationDate = creationDate.plusDays(30);
         this.duration = java.time.temporal.ChronoUnit.DAYS.between(creationDate, expirationDate);
         this.button = new Button(name);  // El nombre de la tarjeta es el texto del botón
+        this.buttonSave = new Button("Save");
+        this.buttonDelete = new Button("Delete");
     }
 
     // Métodos getters y setters
@@ -66,5 +71,13 @@ public class Card {
 
     public Button getButton() {
         return button;  // Devuelve el botón asociado
+    }
+
+    public Button getButtonSave() {
+        return buttonSave;
+    }
+
+    public Button getButtonDelete() {
+        return buttonDelete;
     }
 }

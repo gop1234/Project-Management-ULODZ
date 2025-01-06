@@ -21,6 +21,7 @@ import javafx.scene.layout.*;
 import java.time.LocalDate;
 import javafx.scene.control.*;
 import Data.Card;
+import Data.CardList;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -38,38 +39,62 @@ public class TaskManagerController {
     private FlowPane cardsContainer; // Contenedor de cartas
 
 
-    // Método para añadir una carta con título
+    // Método para añadir una lista con título
     @FXML
-    private void addCard() {
-        VBox card = new VBox(10);
-        card.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-pref-width: 150px; -fx-pref-height: 200px;");
+    private void addCardList() {
+
+        CardList newCardList = new CardList("New List");
+
+        newCardList.getVcard().setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-pref-width: 150px; -fx-pref-height: 200px;");
 
         TextField titleField = new TextField();
-        titleField.setPromptText("Introduce el título de la carta");
+        titleField.setPromptText(newCardList.getName());
         titleField.setStyle("-fx-font-size: 10px; -fx-pref-width: 100px;");
 
+        // Añadir un ChangeListener al TextField para actualizar el nombre de la CardList en tiempo real
+        titleField.textProperty().addListener((observable, oldValue, newValue) -> {
+            newCardList.setName(newValue);  // Cambiar el nombre de la CardList mientras el usuario escribe
+            System.out.println("Nuevo nombre: " + newCardList.getName());
+        });
 
-        Button addTaskButton = new Button("Añadir Tarjeta");
-        addTaskButton.setStyle("-fx-font-size: 6px;");
-        addTaskButton.setOnAction(e -> addTask(card));
+        // Crear los botones dentro de un HBox (horizontal)
+        HBox buttonsBox = new HBox(12); // Espaciado entre los botones
+        buttonsBox.setStyle("-fx-alignment: center;"); // Alineación centrada de los botones
 
-        card.getChildren().addAll(titleField, addTaskButton);
-        cardsContainer.getChildren().add(card);
+        newCardList.getAddCardButton().setStyle("-fx-font-size: 10px;");
+        newCardList.getAddCardButton().setOnAction(e -> addCard(newCardList.getVcard(), newCardList));
+
+        // Creamos el botón de borrado
+        newCardList.getDeleteButton().setStyle("-fx-font-size: 10px;");
+        newCardList.getDeleteButton().setOnAction(e -> {
+            if (newCardList.getCardNumber() > 0) return;
+            cardsContainer.getChildren().remove(newCardList.getVcard());
+        });
+
+        // Añadir ambos botones al HBox
+        buttonsBox.getChildren().addAll(newCardList.getAddCardButton(), newCardList.getDeleteButton());
+
+        newCardList.getVcard().getChildren().addAll(titleField, buttonsBox);
+        cardsContainer.getChildren().add(newCardList.getVcard());
     }
 
     // Método para añadir una tarjeta dentro de la carta
-    private void addTask(VBox card) {
+    private void addCard(VBox card, CardList cardList) {
         // Crear una nueva tarjeta (objeto Card)
         Card newCard = new Card("Nueva Tarjeta");
 
+        System.out.println("CardList: " + cardList.getName());
+        cardList.setCardNumber( cardList.getCardNumber()+1 );
+
         // Crear un botón para la tarjeta
         Button taskButton = newCard.getButton();
-        taskButton.setStyle("-fx-font-size: 9px;");
+        //taskButton.setStyle("-fx-font-size: 9px;");
+        taskButton.setStyle("-fx-pref-width: 200px; -fx-pref-height: 20px; -fx-font-size: 10px;");
 
         // Acción al hacer doble clic sobre la tarjeta
         taskButton.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
-                openCardDetails(newCard);
+                openCardDetails(newCard, card, cardList);
             }
         });
 
@@ -78,10 +103,14 @@ public class TaskManagerController {
     }
 
     // Método para abrir los detalles de la tarjeta
-    private void openCardDetails(Card card) {
+    private void openCardDetails(Card card, VBox cards, CardList cardList) {
         // Crear un VBox para los detalles de la tarjeta
         VBox detailsBox = new VBox(10);
+
         detailsBox.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 250px; -fx-pref-height: 300px;");
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(detailsBox);
 
         // Mostrar los detalles de la tarjeta
         TextField nameField = new TextField(card.getName());
@@ -98,6 +127,7 @@ public class TaskManagerController {
         creationDateLabel.setStyle("-fx-font-size: 12px;");
 
         DatePicker expirationDatePicker = new DatePicker(card.getExpirationDate());
+        expirationDatePicker.setEditable(false);
         expirationDatePicker.setOnAction(e -> {
             card.setExpirationDate(expirationDatePicker.getValue());
             card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
@@ -105,19 +135,37 @@ public class TaskManagerController {
 
         Label durationLabel = new Label("Duración: " + card.getDuration() + " días");
 
-        Button saveButton = new Button("Guardar");
-        saveButton.setOnAction(e -> {
+        HBox buttonsBox = new HBox(12); // Espaciado entre los botones
+        buttonsBox.setStyle("-fx-alignment: center;"); // Alineación centrada de los botones
+
+        //Button saveButton = new Button("Save");
+        card.getButtonSave().setOnAction(e -> {
             card.setName(nameField.getText());
             card.setDescription(descriptionArea.getText());
-
+            card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
+            durationLabel.setText("Duración: " + card.getDuration() + " días");
         });
 
+        // Crear el botón de borrado
+        card.getButtonDelete().setStyle("-fx-font-size: 10px;");
+        card.getButtonDelete().setOnAction(e -> {
+            // Cerrar la ventana emergente
+            stage.close();
+
+            // Eliminar la tarjeta de la CardList
+            cards.getChildren().remove(card.getButton()); // Eliminar el botón de la tarjeta
+            cardList.setCardNumber(cardList.getCardNumber() - 1); // Actualizar el número de tarjetas
+            System.out.println("Tarjeta eliminada, número actual de tarjetas: " + cardList.getCardNumber());
+        });
+
+        // Añadir ambos botones al HBox
+        buttonsBox.getChildren().addAll(card.getButtonSave(), card.getButtonDelete());
+
+
         // Añadir los elementos al VBox
-        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel, expirationDatePicker, durationLabel, saveButton);
+        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel, expirationDatePicker, durationLabel, buttonsBox);
 
         // Mostrar la ventana emergente
-        Stage stage = new Stage();
-        Scene scene = new Scene(detailsBox);
         stage.setScene(scene);
         stage.show();
     }
