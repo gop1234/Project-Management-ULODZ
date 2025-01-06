@@ -35,9 +35,9 @@ public class TaskProgressController {
 
 
     public void update(){
-        toDo.getItems().removeAll(project.getTasks());
-        onGoing.getItems().removeAll(project.getTasks());
-        finished.getItems().removeAll(project.getTasks());
+        toDo.getItems().removeAll(toDo.getItems());
+        onGoing.getItems().removeAll(onGoing.getItems());
+        finished.getItems().removeAll(finished.getItems());
         for(Task t : project.getTasks()){
             switch((t.getStatus())){
                 case Todo -> toDo.getItems().add(t);

@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TaskManagerController {
@@ -62,6 +64,7 @@ public class TaskManagerController {
         newCardList.getDeleteButton().setOnAction(e -> {
             if (newCardList.getCardNumber() > 0) return;
             cardsContainer.getChildren().remove(newCardList.getVcard());
+            this.cardLists.remove(newCardList);
         });
 
         // Añadir ambos botones al HBox
@@ -103,7 +106,7 @@ public class TaskManagerController {
         // Crear un VBox para los detalles de la tarjeta
         VBox detailsBox = new VBox(10);
 
-        detailsBox.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 250px; -fx-pref-height: 300px;");
+        detailsBox.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 300px; -fx-pref-height: 375px;");
 
         Stage stage = new Stage();
         Scene scene = new Scene(detailsBox);
@@ -121,19 +124,27 @@ public class TaskManagerController {
 
         Label creationDateLabel = new Label("Start Date: ");
         creationDateLabel.setStyle("-fx-font-size: 12px;");
-        DatePicker startDatePicker = new DatePicker(card.getExpirationDate());
-
-        Label endDateLabel = new Label("End Date: ");
+        DatePicker startDatePicker = new DatePicker(card.getCreationDate());
+        startDatePicker.setEditable(false);
+        startDatePicker.setOnAction(e -> {
+                card.setCreationDate(startDatePicker.getValue());
+                //card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
+        });
+        Label endDateLabel = new Label("End Date: " + card.getExpirationDate().toString());
         endDateLabel.setStyle("-fx-font-size: 12px;");
 
-        DatePicker expirationDatePicker = new DatePicker(card.getExpirationDate());
-        expirationDatePicker.setEditable(false);
-        expirationDatePicker.setOnAction(e -> {
-            card.setExpirationDate(expirationDatePicker.getValue());
-            card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
-        });
+        Label durationLabel = new Label("Duration: ");
+        TextField durationN= new TextField(String.valueOf(card.getDuration()));
+        durationN.setMaxSize(50,20);
+        Label durationLabel2 = new Label("days");
+        HBox durationBox = new HBox(12);
+        durationBox.getChildren().addAll(durationLabel,durationN,durationLabel2);
 
-        Label durationLabel = new Label("Duration: " + card.getDuration() + " days");
+
+        Label priceLabel = new Label("Total Price:");
+        TextField priceField = new TextField(String.valueOf(card.getPrice()));
+        HBox priceBox = new HBox(12);
+        priceBox.getChildren().addAll(priceLabel,priceField);
 
         HBox buttonsBox = new HBox(12); // Espaciado entre los botones
         buttonsBox.setStyle("-fx-alignment: center;"); // Alineación centrada de los botones
@@ -142,8 +153,9 @@ public class TaskManagerController {
         card.getButtonSave().setOnAction(e -> {
             card.setName(nameField.getText());
             card.setDescription(descriptionArea.getText());
-            card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
-            durationLabel.setText("Duración: " + card.getDuration() + " días");
+            card.setDuration(Long.parseLong(durationN.getText()));
+            card.setPrice(Float.parseFloat(priceField.getText()));
+            card.setExpirationDate(card.getCreationDate().plusDays(card.getDuration()));
             stage.close();
         });
 
@@ -154,9 +166,10 @@ public class TaskManagerController {
             stage.close();
 
             // Eliminar la tarjeta de la CardList
+            cardList.getCards().remove(card);
             cards.getChildren().remove(card.getButton()); // Eliminar el botón de la tarjeta
             cardList.setCardNumber(cardList.getCardNumber() - 1); // Actualizar el número de tarjetas
-            System.out.println("Tarjeta eliminada, número actual de tarjetas: " + cardList.getCardNumber());
+            //System.out.println("Tarjeta eliminada, número actual de tarjetas: " + cardList.getCardNumber());
         });
 
         // Añadir ambos botones al HBox
@@ -164,7 +177,7 @@ public class TaskManagerController {
 
 
         // Añadir los elementos al VBox
-        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel, expirationDatePicker, durationLabel, buttonsBox);
+        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel,startDatePicker,endDateLabel, durationBox,priceBox, buttonsBox);
 
         // Mostrar la ventana emergente
         stage.setScene(scene);

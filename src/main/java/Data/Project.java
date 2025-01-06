@@ -2,6 +2,7 @@ package Data;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Project {
@@ -33,14 +34,25 @@ public class Project {
             if(!temp) tasks.add(l);
         }
 
-        for(Task t:this.tasks){
-            temp=false;
-            for(Task l:list){
-                if(t.getName().equals(l.getName())){
-                    temp=true;
+        Iterator<Task> taskIterator = tasks.iterator();
+
+        // Iterate over the tasks list
+        while (taskIterator.hasNext()) {
+            Task t = taskIterator.next();
+            temp = false;
+
+            // Check if the task name exists in the other list
+            for (Task l : list) {
+                if (t.getName().equals(l.getName())) {
+                    temp = true;
+                    break; // Exit the inner loop once a match is found
                 }
             }
-            if(!temp) tasks.remove(t);
+
+            // If no match was found, remove the task from the tasks list
+            if (!temp) {
+                taskIterator.remove();
+            }
         }
     }
 
