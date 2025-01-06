@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -28,6 +29,8 @@ public class HelloController {
     private Stage stage; // for the change windows
     private Parent parent; // for the change windows
 
+    @FXML
+    private Label user;
     @FXML
     private TabPane projectTabPane; // refers to the tabpane on the window
     private int tabCounter=0; // how many tabs are
@@ -90,6 +93,7 @@ public class HelloController {
      * Function that must be used every time we load the window, information is
      * stored in Data controller so must be load in the window*/
     public void loadWindow() throws IOException {
+        user.setText("Welcome:" +DataController.getInstance().getLogedUser().getName());
         for (Project p : DataController.getInstance().getProjetcs()){
             tabCounter++;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ProjectTab-view.fxml"));

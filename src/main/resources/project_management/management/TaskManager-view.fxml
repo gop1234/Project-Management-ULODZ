@@ -5,9 +5,8 @@
 
 <AnchorPane prefHeight="355.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.TaskManagerController">
    <children>
-      <Button fx:id="add" layoutX="59.0" layoutY="311.0" mnemonicParsing="false" onAction="#addCardList" text="Add" />
-      <Button fx:id="delete" layoutX="506.0" layoutY="311.0" mnemonicParsing="false" text="Delete" />
-      <Button fx:id="edit" layoutX="316.0" layoutY="311.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="add" layoutX="59.0" layoutY="311.0" mnemonicParsing="false" onAction="#addCardList" text="Create New List" />
       <FlowPane fx:id="cardsContainer" hgap="10" layoutX="35.0" layoutY="47.0" prefHeight="200.0" prefWidth="534.0" vgap="10" />
+      <Button layoutX="352.0" layoutY="311.0" mnemonicParsing="false" onAction="#onSaveChangesButtonClicked" text="Save changes" />
    </children>
 </AnchorPane>

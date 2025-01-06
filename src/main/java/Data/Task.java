@@ -1,25 +1,34 @@
 package Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
 public class Task {
+    private String group;
     private String name;
     private String description;
-    private Date startDate;
-    private Date endDate;
-    private int duration;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private long duration;
+    private float price;
     private Status status;
     private int nIssues = 0;
 
     private ArrayList<Issue> issues;
 
     public Task(Status s,String name) {
+        this.duration=0;
         this.status=s;
         this.name=name;
         this.nIssues=0;
         this.issues=new ArrayList<Issue>();
+        this.price=0;
+    }
+
+    public void update(Task t){
+
     }
     @Override
     public String toString(){
@@ -49,19 +58,19 @@ public class Task {
 
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -98,5 +107,29 @@ public class Task {
 
     public ArrayList<Issue> getIssues() {
         return issues;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

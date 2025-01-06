@@ -56,6 +56,8 @@ public class ProjectController {
 
         loader = new FXMLLoader(getClass().getResource("TaskManager-view.fxml"));
         tabContent = loader.load();
+        TaskManagerController taskManagerController = loader.getController();
+        taskManagerController.loadWindow(project);
         newTab = new Tab("Task Manager",tabContent);
         generalTab.getTabs().add(newTab);
 

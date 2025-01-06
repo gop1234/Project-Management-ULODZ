@@ -8,6 +8,7 @@ public class Project {
     private String name;
     private String description;
     private ArrayList<Task> tasks;
+    private ArrayList<String> categories;
     private float price;
 
 
@@ -16,12 +17,36 @@ public class Project {
         tasks = new ArrayList<>();
         description ="";
         price =0;
-        tasks.add(new Task(Status.Todo, "t1"));
-        tasks.add(new Task(Status.Ongoing, "t2"));
-        tasks.add(new Task(Status.Finished, "t3"));
-        tasks.add(new Task(Status.Todo, "t4"));
+        categories=new ArrayList<String>();
     }
 
+    public void updateTasks(ArrayList<Task> list) {
+        boolean temp = false;
+        for(Task l:list){
+            temp=false;
+            for(Task t:this.tasks){
+                if(t.getName().equals(l.getName())){
+                    t.update(l);
+                    temp=true;
+                }
+            }
+            if(!temp) tasks.add(l);
+        }
+
+        for(Task t:this.tasks){
+            temp=false;
+            for(Task l:list){
+                if(t.getName().equals(l.getName())){
+                    temp=true;
+                }
+            }
+            if(!temp) tasks.remove(t);
+        }
+    }
+
+    public void updateCategory(ArrayList<String> stemp) {
+        categories=stemp;
+    }
     public String getName() {
         return name;
     }
@@ -51,4 +76,15 @@ public class Project {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public ArrayList<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
+
+
+
 }

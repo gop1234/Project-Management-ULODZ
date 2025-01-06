@@ -35,6 +35,17 @@ public class TaskProgressController {
 
 
     public void update(){
+        toDo.getItems().removeAll(project.getTasks());
+        onGoing.getItems().removeAll(project.getTasks());
+        finished.getItems().removeAll(project.getTasks());
+        for(Task t : project.getTasks()){
+            switch((t.getStatus())){
+                case Todo -> toDo.getItems().add(t);
+                case Ongoing ->  onGoing.getItems().add(t);
+                case Finished -> finished.getItems().add(t);
+
+            }
+        }
         if(selectedTask == null) {
             System.out.println("Es null ");
             return;
@@ -51,17 +62,7 @@ public class TaskProgressController {
             issues.getItems().add(i);
         }
 
-        toDo.getItems().removeAll(project.getTasks());
-        onGoing.getItems().removeAll(project.getTasks());
-        finished.getItems().removeAll(project.getTasks());
-        for(Task t : project.getTasks()){
-            switch((t.getStatus())){
-                case Todo -> toDo.getItems().add(t);
-                case Ongoing ->  onGoing.getItems().add(t);
-                case Finished -> finished.getItems().add(t);
 
-            }
-        }
 
     }
 

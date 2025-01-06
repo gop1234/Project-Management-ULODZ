@@ -10,6 +10,7 @@ public class Card {
     private LocalDate creationDate;
     private LocalDate expirationDate;
     private long duration; // en días
+    private float price;
     private Button button;  // El botón asociado a la tarjeta
     private Button buttonSave;
     private Button buttonDelete;
@@ -20,6 +21,7 @@ public class Card {
         this.creationDate = LocalDate.now();
         this.expirationDate = creationDate.plusDays(30);
         this.duration = java.time.temporal.ChronoUnit.DAYS.between(creationDate, expirationDate);
+        this.price=0;
         this.button = new Button(name);  // El nombre de la tarjeta es el texto del botón
         this.buttonSave = new Button("Save");
         this.buttonDelete = new Button("Delete");
@@ -79,5 +81,13 @@ public class Card {
 
     public Button getButtonDelete() {
         return buttonDelete;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }
