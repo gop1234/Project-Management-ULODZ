@@ -75,7 +75,7 @@ public class TaskManagerController {
     // Método para añadir una tarjeta dentro de la carta
     private void addCard(VBox card, CardList cardList) {
         // Crear una nueva tarjeta (objeto Card)
-        Card newCard = new Card("Nueva Tarjeta");
+        Card newCard = new Card("New Task");
 
         System.out.println("CardList: " + cardList.getName());
         cardList.setCardNumber( cardList.getCardNumber()+1 );
@@ -110,17 +110,21 @@ public class TaskManagerController {
 
         // Mostrar los detalles de la tarjeta
         TextField nameField = new TextField(card.getName());
-        nameField.setPromptText("Nombre de la tarjeta");
+        nameField.setPromptText("Task Name");
 
         TextArea descriptionArea = new TextArea(card.getDescription());
-        descriptionArea.setPromptText("Descripción");
+        descriptionArea.setPromptText("Description");
 
         //DatePicker creationDatePicker = new DatePicker(card.getCreationDate());
         //creationDatePicker.setEditable(false);
         //creationDatePicker.setMouseTransparent(true);  // Esto hace que el DatePicker no sea interactivo con el ratón
 
-        Label creationDateLabel = new Label("Fecha de creación: " + card.getCreationDate().toString());
+        Label creationDateLabel = new Label("Start Date: ");
         creationDateLabel.setStyle("-fx-font-size: 12px;");
+        DatePicker startDatePicker = new DatePicker(card.getExpirationDate());
+
+        Label endDateLabel = new Label("End Date: ");
+        endDateLabel.setStyle("-fx-font-size: 12px;");
 
         DatePicker expirationDatePicker = new DatePicker(card.getExpirationDate());
         expirationDatePicker.setEditable(false);
@@ -129,7 +133,7 @@ public class TaskManagerController {
             card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
         });
 
-        Label durationLabel = new Label("Duración: " + card.getDuration() + " días");
+        Label durationLabel = new Label("Duration: " + card.getDuration() + " days");
 
         HBox buttonsBox = new HBox(12); // Espaciado entre los botones
         buttonsBox.setStyle("-fx-alignment: center;"); // Alineación centrada de los botones
@@ -140,6 +144,7 @@ public class TaskManagerController {
             card.setDescription(descriptionArea.getText());
             card.setDuration(java.time.temporal.ChronoUnit.DAYS.between(card.getCreationDate(), card.getExpirationDate()));
             durationLabel.setText("Duración: " + card.getDuration() + " días");
+            stage.close();
         });
 
         // Crear el botón de borrado

@@ -17,7 +17,7 @@ public class CardList {
     public CardList(String nombre){
         this.name = nombre;
         this.cardNumber = 0;
-        this.addCardButton = new Button("Add card");  // El nombre de la tarjeta es el texto del botón
+        this.addCardButton = new Button("Add Task");  // El nombre de la tarjeta es el texto del botón
         this.deleteButton = new Button("Delete list");
         this.vcard = new VBox(10);
         this.cards=new ArrayList<Card>();
