@@ -18,6 +18,7 @@
          <TabPane fx:id="projectTabPane" prefHeight="200.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" />
          <Label layoutY="256.0" text="Name:" />
          <TextField fx:id="projectName" layoutX="35.0" layoutY="252.0" />
+         <Button layoutX="380.0" layoutY="267.0" mnemonicParsing="false" onAction="#onlogoutButtonCliked" text="Logout" />
       </children>
    </AnchorPane>
 </VBox>

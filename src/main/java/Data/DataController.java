@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Use to store all data project user everything*/
 public class DataController {
     private static DataController instance;
+    private User logedUser;
 
     private ArrayList<Project> projetcs;
 
@@ -22,9 +23,17 @@ public class DataController {
         return instance;
     }
 
+    public void setLogedUser(User user){
+        this.logedUser=user;
+    }
+
+
 
     public ArrayList<Project> getProjetcs() {
         return projetcs;
     }
 
+    public User getLogedUser() {
+        return logedUser;
+    }
 }

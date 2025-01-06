@@ -77,6 +77,15 @@ public class HelloController {
         stage.show();
     }
 
+    @FXML
+    public void onlogoutButtonCliked(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login-view.fxml"));
+        parent = loader.load();
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
     /**
      * Function that must be used every time we load the window, information is
      * stored in Data controller so must be load in the window*/

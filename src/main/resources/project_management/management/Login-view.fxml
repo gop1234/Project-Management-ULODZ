@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.LoginController">
+   <children>
+      <Label layoutX="164.0" layoutY="35.0" text="Project Management Tool">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="162.0" text="Username:" />
+      <PasswordField fx:id="password" layoutX="152.0" layoutY="200.0" />
+      <TextField fx:id="username" layoutX="152.0" layoutY="158.0" />
+      <Label layoutX="89.0" layoutY="204.0" text="Password:" />
+      <Button layoutX="201.0" layoutY="259.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" text="Login" />
+      <Button layoutX="424.0" layoutY="259.0" mnemonicParsing="false" onAction="#onAdminButtonClicked" text="Admin Loggin" />
+      <Label layoutX="424.0" layoutY="85.0" text="Developers:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="424.0" layoutY="124.0" text="Gabriel Otero Pombo" />
+      <Label layoutX="424.0" layoutY="149.0" text="Javier Outeriño Cortes" />
+      <Label layoutX="424.0" layoutY="175.0" text="Nikolay Kossov" />
+      <Label layoutX="424.0" layoutY="196.0" text="Marco Tiozzo" />
+   </children>
+</AnchorPane>
