@@ -1,12 +1,17 @@
 package Data;
 
-public class Issue {
-    private String name;
-    private String description;
+import java.time.LocalDate;
+import java.util.Date;
 
-    public Issue(String name){
+public class Issue {
+    private  String name;
+    private String description;
+    private LocalDate creationDate;
+
+    public Issue(String name, String description, LocalDate creationDate){
         this.name=name;
-        this.description="";
+        this.description=description;
+        this.creationDate=creationDate;
     }
 
     @Override
@@ -14,6 +19,9 @@ public class Issue {
         return this.name;
     }
 
+    public void setName(String name){
+        this.name=name;
+    }
     public String getName(){
         return name;
     }
@@ -23,5 +31,13 @@ public class Issue {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 }

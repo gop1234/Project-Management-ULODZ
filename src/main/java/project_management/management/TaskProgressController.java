@@ -4,7 +4,13 @@ import Data.Issue;
 import Data.Project;
 import Data.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 
 public class TaskProgressController {
@@ -23,8 +29,6 @@ public class TaskProgressController {
     @FXML
     private Label numberIssues;
     @FXML
-    private TextField issueName;
-    @FXML
     private TextArea issueDesciption;
     @FXML
     private ComboBox<Issue> issues;
@@ -37,14 +41,12 @@ public class TaskProgressController {
         }
         this.numberIssues.setText("Issues:" + selectedTask.getnIssues());
         if(selectedIssue == null){
-            this.issueName.setText("");
             this.issueDesciption.setText("");
-
         }
         selectTask.setText("Selected task: " + selectedTask.getName());
-        /*if(!issues.getItems().isEmpty()){
+        if(!issues.getItems().isEmpty()){
             issues.getItems().removeAll(issues.getItems());
-        }*/
+        }
         for(Issue i : selectedTask.getIssues()){
             issues.getItems().add(i);
         }
@@ -104,8 +106,70 @@ public class TaskProgressController {
 
     @FXML
     public void onNewIssueButtonClicked(){
-        issueDesciption.setText("");
-        issueName.setText("");
+        if(selectedTask==null) return;
+        VBox issueDetails = new VBox(10);
+
+        issueDetails.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 250px; -fx-pref-height: 300px;");
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(issueDetails);
+
+        TextField name = new TextField();
+        name.setPromptText("Name of Issue");
+        TextArea description = new TextArea();
+        description.setPromptText("Desciption");
+        Label creationDate = new Label("CreationDate: "+ LocalDate.now().toString());
+        HBox buttonsBox = new HBox(12);
+        buttonsBox.setStyle("-fx-alignment: center;");
+        Button close = new Button("Close");
+        close.setOnAction(event -> {stage.close();});
+        Button save = new Button("Save");
+        save.setOnAction(event -> {
+            Issue i = new Issue(name.getText(),description.getText(),LocalDate.now());
+            selectedTask.addIssues(i);
+            selectedIssue=i;
+            update();
+            stage.close();
+        });
+        buttonsBox.getChildren().addAll(close,save);
+        issueDetails.getChildren().addAll(name,description,creationDate,buttonsBox);
+
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    public void onEditIssueButtonClicked(){
+        if(selectedIssue==null) return;
+        VBox issueDetails = new VBox(10);
+
+        issueDetails.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-pref-width: 250px; -fx-pref-height: 300px;");
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(issueDetails);
+
+        TextField name = new TextField();
+        name.setText(selectedIssue.getName());
+        TextArea description = new TextArea();
+        description.setPromptText(selectedIssue.getDescription());
+        Label creationDate = new Label("CreationDate: "+ selectedIssue.getCreationDate().toString());
+        HBox buttonsBox = new HBox(12);
+        buttonsBox.setStyle("-fx-alignment: center;");
+        Button close = new Button("Close");
+        close.setOnAction(event -> {stage.close();});
+        Button save = new Button("Save");
+        save.setOnAction(event -> {
+            selectedIssue.setName(name.getText());
+            selectedIssue.setDescription(description.getText());
+            update();
+            stage.close();
+        });
+        buttonsBox.getChildren().addAll(close,save);
+        issueDetails.getChildren().addAll(name,description,creationDate,buttonsBox);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -119,19 +183,13 @@ public class TaskProgressController {
     }
 
     @FXML
-    public void onSaveButtonClicked(){
-        if(issueName.getText().isEmpty() || issueDesciption.getText().isEmpty()) return;
-        Issue i = new Issue(issueName.getText());
-        i.setDescription(issueDesciption.getText());
-        selectedTask.addIssues(i);
+    public void onRefreshButtonClicked(){
         update();
     }
     @FXML
     public void onIssuesclicked(){
         selectedIssue=issues.getSelectionModel().getSelectedItem();
-        issueName.setText(selectedIssue.getName());
         issueDesciption.setText(selectedIssue.getDescription());
-        issues.getSelectionModel().clearSelection();
     }
     public void loadWindow(Project p){
         this.project = p;
