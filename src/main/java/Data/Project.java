@@ -1,9 +1,5 @@
 package Data;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 887d6f1 (Payment's system)
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,20 +11,14 @@ public class Project {
     private ArrayList<String> categories;
     private float price;
 
-<<<<<<< HEAD
-
-    public Project(String name) {
-        this.name = name;
-        tasks = new ArrayList<>();
-        description ="";
-        price =0;
-        categories=new ArrayList<String>();
-=======
     // Existing fields
     private ArrayList<IncomeExpense> incomeExpenses; // Here stores IncomeExpense info
 
     // New field for payments
     private ArrayList<Payment> payments; // Here stores payments info
+
+
+
 
     public Project(String name) {
         this.name = name;
@@ -67,12 +57,11 @@ public class Project {
 
     public List<Task> getTasks() {
         return tasks;
->>>>>>> 887d6f1 (Payment's system)
     }
 
     public void updateTasks(ArrayList<Task> list) {
         boolean temp = false;
-<<<<<<< HEAD
+
         for(Task l:list){
             temp=false;
             for(Task t:this.tasks){
@@ -82,17 +71,7 @@ public class Project {
                 }
             }
             if(!temp) tasks.add(l);
-=======
-        for (Task l : list) {
-            temp = false;
-            for (Task t : this.tasks) {
-                if (t.getName().equals(l.getName())) {
-                    t.update(l);
-                    temp = true;
-                }
-            }
-            if (!temp) tasks.add(l);
->>>>>>> 887d6f1 (Payment's system)
+
         }
 
         Iterator<Task> taskIterator = tasks.iterator();
@@ -117,42 +96,7 @@ public class Project {
         }
     }
 
-<<<<<<< HEAD
-    public void updateCategory(ArrayList<String> stemp) {
-        categories=stemp;
-    }
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-=======
->>>>>>> 887d6f1 (Payment's system)
     public ArrayList<String> getCategories() {
         return categories;
     }
@@ -161,10 +105,7 @@ public class Project {
         this.categories = categories;
     }
 
-<<<<<<< HEAD
 
-
-=======
     public void updateCategory(ArrayList<String> stemp) {
         this.categories = stemp;
     }
@@ -201,5 +142,5 @@ public class Project {
     public void addPayment(Payment payment) {
         this.payments.add(payment);
     }
->>>>>>> 887d6f1 (Payment's system)
+
 }
