@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/javafx" xmlns="http://javafx.com/fxml"
+            fx:controller="project_management.management.ProjectDetailsController">
+    <children>
+        <Label text="Project Details" layoutX="10.0" layoutY="10.0" />
+
+        <!-- Income/Expenses Table -->
+        <Label text="Income/Expenses" layoutX="10.0" layoutY="40.0" />
+        <TableView fx:id="incomeExpensesTable" layoutX="10.0" layoutY="60.0" prefHeight="150.0" prefWidth="580.0">
+            <columns>
+                <TableColumn fx:id="typeColumn" text="Type" />
+                <TableColumn fx:id="amountColumn" text="Amount" />
+                <TableColumn fx:id="currencyColumn" text="Currency" />
+            </columns>
+        </TableView>
+        <Button text="Add Income/Expense" layoutX="600.0" layoutY="60.0" onAction="#onAddIncomeExpense" />
+
+        <!-- Payments Table -->
+        <Label text="Payments" layoutX="10.0" layoutY="230.0" />
+        <TableView fx:id="paymentsTable" layoutX="10.0" layoutY="250.0" prefHeight="150.0" prefWidth="580.0">
+            <columns>
+                <TableColumn fx:id="paymentDateColumn" text="Date" />
+                <TableColumn fx:id="paymentAmountColumn" text="Amount" />
+                <TableColumn fx:id="paymentCurrencyColumn" text="Currency" />
+                <TableColumn fx:id="paymentStatusColumn" text="Status" />
+            </columns>
+        </TableView>
+        <Button text="Add Payment" layoutX="600.0" layoutY="250.0" onAction="#onAddPayment" />
+
+        <!-- Profit/Loss -->
+        <Label fx:id="profitLossLabel" layoutX="10.0" layoutY="420.0" text="Profit/Loss: " />
+        <Button text="Back" layoutX="500.0" layoutY="420.0" onAction="#onBackButtonClick" />
+    </children>
+</AnchorPane>
