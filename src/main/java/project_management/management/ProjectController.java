@@ -1,5 +1,6 @@
 package project_management.management;
 
+import Data.DataController;
 import Data.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,6 +67,13 @@ public class ProjectController {
         TaskProgressController TPController = loader.getController();
         TPController.loadWindow(p);
         newTab = new Tab("Task Traking",tabContent);
+        generalTab.getTabs().add(newTab);
+
+        loader = new FXMLLoader(getClass().getResource("ProjectDetails-view.fxml"));
+        tabContent = loader.load();
+        ProjectDetailsController controller = loader.getController();
+        controller.loadWindow(p);
+        newTab = new Tab("Income/Expenses",tabContent);
         generalTab.getTabs().add(newTab);
     }
 }

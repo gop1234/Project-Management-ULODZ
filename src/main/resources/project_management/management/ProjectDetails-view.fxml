@@ -3,13 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/javafx" xmlns="http://javafx.com/fxml"
-            fx:controller="project_management.management.ProjectDetailsController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.ProjectDetailsController">
     <children>
-        <Label text="Project Details" layoutX="10.0" layoutY="10.0" />
+        <Label layoutX="10.0" layoutY="10.0" text="Project Details" />
 
         <!-- Income/Expenses Table -->
-        <Label text="Income/Expenses" layoutX="10.0" layoutY="40.0" />
+        <Label layoutX="10.0" layoutY="40.0" text="Income/Expenses" />
         <TableView fx:id="incomeExpensesTable" layoutX="10.0" layoutY="60.0" prefHeight="150.0" prefWidth="580.0">
             <columns>
                 <TableColumn fx:id="typeColumn" text="Type" />
@@ -17,10 +16,10 @@
                 <TableColumn fx:id="currencyColumn" text="Currency" />
             </columns>
         </TableView>
-        <Button text="Add Income/Expense" layoutX="600.0" layoutY="60.0" onAction="#onAddIncomeExpense" />
+        <Button layoutX="600.0" layoutY="60.0" onAction="#onAddIncomeExpense" text="Add Income/Expense" />
 
         <!-- Payments Table -->
-        <Label text="Payments" layoutX="10.0" layoutY="230.0" />
+        <Label layoutX="10.0" layoutY="230.0" text="Payments" />
         <TableView fx:id="paymentsTable" layoutX="10.0" layoutY="250.0" prefHeight="150.0" prefWidth="580.0">
             <columns>
                 <TableColumn fx:id="paymentDateColumn" text="Date" />
@@ -29,10 +28,9 @@
                 <TableColumn fx:id="paymentStatusColumn" text="Status" />
             </columns>
         </TableView>
-        <Button text="Add Payment" layoutX="600.0" layoutY="250.0" onAction="#onAddPayment" />
+        <Button layoutX="600.0" layoutY="250.0" onAction="#onAddPayment" text="Add Payment" />
 
         <!-- Profit/Loss -->
         <Label fx:id="profitLossLabel" layoutX="10.0" layoutY="420.0" text="Profit/Loss: " />
-        <Button text="Back" layoutX="500.0" layoutY="420.0" onAction="#onBackButtonClick" />
     </children>
 </AnchorPane>

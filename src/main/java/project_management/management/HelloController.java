@@ -12,15 +12,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.scene.layout.VBox;
-
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import Data.Project;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 
 
 
@@ -37,7 +34,7 @@ public class HelloController {
     @FXML
     private Label user;
     @FXML
-    private TabPane projectTabPane; // refers to the tabpane on the window
+    private TabPane projectTabPane; // refers to the tabPane on the window
 
     private int tabCounter = 0; // how many tabs are
 
@@ -87,17 +84,15 @@ public class HelloController {
             System.out.println("No project selected");
             return;
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ProjectDetails-view.fxml"));
-        Parent root = loader.load();
-        ProjectDetailsController controller = loader.getController();
-        int selectedIndex = projectTabPane.getSelectionModel().getSelectedIndex();
-        System.out.println("Selected project index: " + selectedIndex);
-        Project selectedProject = DataController.getInstance().getProjetcs().get(selectedIndex);
-        System.out.println("Opening project: " + selectedProject.getName());
-        controller.loadWindow(selectedProject);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Project-view.fxml"));
+        parent = loader.load();
+        ProjectController controller = loader.getController();
+        controller.loadWindow(DataController.getInstance().getProjetcs().get(projectTabPane.getSelectionModel().getSelectedIndex()));
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(parent);
+        stage.setScene(scene);
         stage.show();
+
     }
 
     @FXML
