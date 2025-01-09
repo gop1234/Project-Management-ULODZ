@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="371.0" prefWidth="456.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+      <children>
+      
+          <Label text="Dashboard" />
+         <Label fx:id="user" text="Welcome :" />
+      </children>
+   </HBox>
+   <AnchorPane prefHeight="383.0" prefWidth="416.0">
+      <children>
+          <Button layoutX="35.0" layoutY="222.0" onAction="#onNewButtonClick" text="New" />
+         <Button layoutX="127.0" layoutY="222.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="Delete" />
+         <Button layoutX="339.0" layoutY="222.0" mnemonicParsing="false" onAction="#onOpenButtonClick" text="Open" />
+         <TabPane fx:id="projectTabPane" prefHeight="200.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" />
+         <Label layoutY="256.0" text="Name:" />
+         <TextField fx:id="projectName" layoutX="35.0" layoutY="252.0" />
+         <Button layoutX="380.0" layoutY="267.0" mnemonicParsing="false" onAction="#onlogoutButtonCliked" text="Logout" />
+         <Button layoutX="208.0" layoutY="222.0" mnemonicParsing="false" onAction="#onGeneralExpensesButtonClicked" text="General Expenses" />
+      </children>
+   </AnchorPane>
+
+</VBox>

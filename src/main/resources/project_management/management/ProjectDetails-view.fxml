@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.ProjectDetailsController">
+    <children>
+        <Label layoutX="10.0" layoutY="10.0" text="Project Details" />
+
+        <!-- Income/Expenses Table -->
+        <Label layoutX="10.0" layoutY="40.0" text="Income/Expenses" />
+        <TableView fx:id="incomeExpensesTable" layoutX="10.0" layoutY="60.0" prefHeight="150.0" prefWidth="580.0">
+            <columns>
+                <TableColumn fx:id="typeColumn" text="Type" />
+                <TableColumn fx:id="amountColumn" text="Amount" />
+                <TableColumn fx:id="currencyColumn" text="Currency" />
+                <TableColumn fx:id="invoiceNumberColumn" text="Invoice Number" />
+                <TableColumn fx:id="documentLinkColumn" text="Document Link" />
+            </columns>
+        </TableView>
+        <Button layoutX="600.0" layoutY="60.0" onAction="#onAddIncomeExpense" text="Add Income/Expense" />
+
+
+        <!-- Payments Table -->
+        <Label layoutX="10.0" layoutY="230.0" text="Payments" />
+        <TableView fx:id="paymentsTable" layoutX="10.0" layoutY="250.0" prefHeight="150.0" prefWidth="580.0">
+            <columns>
+                <TableColumn fx:id="paymentDateColumn" text="Date" />
+                <TableColumn fx:id="paymentAmountColumn" text="Amount" />
+                <TableColumn fx:id="paymentCurrencyColumn" text="Currency" />
+                <TableColumn fx:id="paymentStatusColumn" text="Status" />
+            </columns>
+        </TableView>
+        <Button layoutX="600.0" layoutY="250.0" onAction="#onAddPayment" text="Add Payment" />
+
+        <!-- Profit/Loss -->
+        <Label layoutX="10.0" layoutY="420.0" text="Profit/Loss: " />
+        <Label fx:id="profitLossLabel" layoutX="100.0" layoutY="420.0" text="0.00 USD" />
+        <ChoiceBox fx:id="currencyChoiceBox" layoutX="200.0" layoutY="420.0" prefWidth="100.0" onAction="#onCurrencyChange" />
+
+    </children>
+</AnchorPane>
+
+
