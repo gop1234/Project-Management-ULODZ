@@ -3,6 +3,10 @@ package project_management.management;
 import Data.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -15,6 +19,7 @@ import javafx.scene.Scene;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class TaskManagerController {
@@ -277,43 +282,75 @@ public class TaskManagerController {
         project.updateCategory(stemp);
         project.updateTasks(temp);
     }
-
-    /*
-    // Método para añadir una carta con título
     @FXML
-    private void addCard() {
-        // Crear un VBox para la carta
-        VBox card = new VBox(10);
-        card.setStyle("-fx-border-color: black; -fx-padding: 5px; -fx-pref-width: 150px; -fx-pref-height: 200px;");
+    public void onCreateGaantchartButtonClicked(){
+        if(project.getTasks().isEmpty()) return;
+        NumberAxis xAxis = new NumberAxis();
+        xAxis.setLabel("Days from Start of Project");
 
-        // Crear un TextField para que el usuario ingrese el título de la carta
-        TextField titleField = new TextField();
-        titleField.setPromptText("Introduce el título de la carta");
-        titleField.setStyle("-fx-font-size: 10px; -fx-pref-width: 100px;");
+        // Y-axis: Tasks
+        CategoryAxis yAxis = new CategoryAxis();
+        yAxis.setLabel("Tasks");
 
-        // Botón para añadir tarjetas dentro de la carta
-        Button addTaskButton = new Button("Añadir Tarjeta");
-        addTaskButton.setStyle("-fx-font-size: 8px;");
-        addTaskButton.setOnAction(e -> addTask(card));
+        // Create StackedBarChart
+        StackedBarChart<Number, String> ganttChart = new StackedBarChart<>(xAxis, yAxis);
+        ganttChart.setTitle("Gantt Chart ");
 
-        // Añadir el campo de texto y el botón a la carta
-        card.getChildren().addAll(titleField, addTaskButton);
 
-        // Añadir la carta al contenedor de cartas
-        cardsContainer.getChildren().add(card);
+        LocalDate projectStart = project.getTasks().get(0).getStartDate();// Project start reference point
+        for(int i=0;i<project.getTasks().size();i++){
+            for(Task t : project.getTasks()){
+                if(projectStart.isAfter(t.getStartDate())) projectStart=t.getStartDate();
+            }
+        }
+
+
+        for(Task t : project.getTasks()){
+            XYChart.Series<Number,String> xy = createInvisibleSeries(t,projectStart);
+            xy.getNode().setStyle("-fx-bar-fill: #000000;");
+            ganttChart.getData().add(xy);
+            ganttChart.getData().add(createVisibleSeries(t,projectStart));
+        }
+
+
+        Stage stage=new Stage();
+        Scene scene = new Scene(ganttChart, 900, 700);
+        stage.setTitle("Gantt Chart");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    // Método para añadir una tarjeta dentro de la carta
-    private void addTask(VBox card) {
-        // Crear un nuevo TextField para la tarjeta
-        TextField taskField = new TextField();
-        taskField.setPromptText("Nombre de la tarjeta");
-        taskField.setStyle("-fx-font-size: 8px; -fx-pref-width: 80px;");
+    // Helper method to create an invisible padding series for offset
+    private XYChart.Series<Number, String> createInvisibleSeries(Task task, LocalDate projectStart) {
+        XYChart.Series<Number, String> series = new XYChart.Series<>();
+        series.setName(""); // Invisible series (no label)
 
-        // Añadir la tarjeta a la carta
-        card.getChildren().add(taskField);
+        long startOffset = ChronoUnit.DAYS.between(projectStart, task.getStartDate());
+        series.getData().add(new XYChart.Data<>(startOffset, task.getName())); // Invisible padding
+        return series;
     }
-    */
+
+    // Helper method to create a visible series for task duration
+    private XYChart.Series<Number, String> createVisibleSeries(Task task, LocalDate projectStart) {
+        XYChart.Series<Number, String> series = new XYChart.Series<>();
+        series.setName(task.getName()); // Task name as label
+
+        long duration = ChronoUnit.DAYS.between(task.getStartDate(), task.getEndDate());
+
+        series.getData().add(new XYChart.Data<>(duration, task.getName())); // Actual task duration
+        return series;
+    }
+    private XYChart.Series<Number, String> createTaskSeries(Task task, LocalDate projectStart) {
+        XYChart.Series<Number, String> series = new XYChart.Series<>();
+        series.setName(task.getName());
+
+        long startOffset = ChronoUnit.DAYS.between(projectStart, task.getStartDate());
+        long duration = ChronoUnit.DAYS.between(task.getStartDate(), task.getEndDate());
+
+        series.getData().add(new XYChart.Data<>(startOffset, task.getName(), duration));
+
+        return series;
+    }
 
 
 

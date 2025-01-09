@@ -7,11 +7,14 @@
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="332.0" prefWidth="334.0">
          <children>
-            <Label fx:id="nameLabel" layoutX="34.0" layoutY="14.0" prefHeight="28.0" prefWidth="227.0" text="Project name:" />
-            <Label fx:id="priceLabel" layoutX="33.0" layoutY="42.0" prefHeight="18.0" prefWidth="122.0" text="Price:" />
-            <TextArea fx:id="desciptionField" layoutX="34.0" layoutY="78.0" prefHeight="72.0" prefWidth="266.0" />
-            <Label layoutX="34.0" layoutY="60.0" text="Descrption:" />
+            <Label fx:id="nameLabel" layoutX="34.0" layoutY="14.0" prefHeight="28.0" prefWidth="218.0" text="Project name:" />
+            <Label fx:id="income" layoutX="33.0" layoutY="42.0" prefHeight="18.0" prefWidth="88.0" text="Income:" />
+            <TextArea fx:id="desciptionField" layoutX="34.0" layoutY="111.0" prefHeight="72.0" prefWidth="266.0" />
+            <Label layoutX="34.0" layoutY="87.0" text="Descrption:" />
             <Button layoutX="212.0" layoutY="244.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save changes" />
+            <Label fx:id="expenses" layoutX="133.0" layoutY="42.0" prefHeight="18.0" prefWidth="95.0" text="Expenses" />
+            <Label fx:id="total" layoutX="233.0" layoutY="43.0" prefHeight="18.0" prefWidth="88.0" text="Total" />
+            <ComboBox fx:id="currency" layoutX="33.0" layoutY="61.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </children>

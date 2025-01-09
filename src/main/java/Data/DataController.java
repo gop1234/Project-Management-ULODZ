@@ -33,9 +33,9 @@ public class DataController {
      * Function to generate sample data*/
     public void generateData(){
         for(int i= 1; i <=12;i++){
-            generalExpenses.add(new GeneralExpenses("Office rent", "Rent",450,"EUR",LocalDate.of(2025,i,27)));
-            generalExpenses.add(new GeneralExpenses("Salary person 1", "Salary",2500,"EUR",LocalDate.of(2025,i,1)));
-            generalExpenses.add(new GeneralExpenses("Salary person 2", "Salary",1500,"EUR",LocalDate.of(2025,i,1)));
+            generalExpenses.add(new GeneralExpenses("Office rent", "Expense",450,"EUR",LocalDate.of(2025,i,27)));
+            generalExpenses.add(new GeneralExpenses("Salary person 1", "Expense",2500,"EUR",LocalDate.of(2025,i,1)));
+            generalExpenses.add(new GeneralExpenses("Royalties", "Income",1000,"EUR",LocalDate.of(2025,i,1)));
         }
         generalExpenses.add(new GeneralExpenses("Software License", "Applications",2500,"EUR",LocalDate.of(2025,12,31)));
 
@@ -46,11 +46,13 @@ public class DataController {
                 """);
         projetcs.add(p1);
 
+
         Project p2 = new Project("Project Management Tool");
-        p1.setDescription("""
+        p2.setDescription("""
                 Create a new Management tool for Trello
                 Improve Trello jira by creating a new version with new features.
                 """);
+        projetcs.add(p2);
     }
 
     public float changeCurrency(float amount,String old, String newC){
@@ -79,9 +81,7 @@ public class DataController {
                 return (float) (amount/1.03);
             }
         }
-
-
-        return 0;
+        return amount;
     }
 
     public void setLogedUser(User user){

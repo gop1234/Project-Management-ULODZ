@@ -12,6 +12,7 @@
           <TableColumn fx:id="type" prefWidth="75.0" text="Type" />
             <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
             <TableColumn fx:id="amount" prefWidth="75.0" text="Amount" />
+            <TableColumn fx:id="currencyCol" prefWidth="75.0" text="Currency" />
         </columns>
       </TableView>
       <Button layoutX="456.0" layoutY="29.0" mnemonicParsing="false" onAction="#onAddButtonClicked" text="Add" />

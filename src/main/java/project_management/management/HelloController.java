@@ -1,15 +1,18 @@
 package project_management.management;
 
 import Data.DataController;
+import Data.GeneralExpenses;
+import Data.Payment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.stage.Stage;
@@ -17,8 +20,7 @@ import javafx.scene.Node;
 import Data.Project;
 
 import java.io.IOException;
-
-
+import java.time.LocalDate;
 
 
 /**
@@ -116,6 +118,81 @@ public class HelloController {
         scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public void onNearPaydmentsButtonClicked(){
+        TableView<GeneralExpenses> table = new TableView<>();
+        TableColumn<GeneralExpenses,String> name = new TableColumn<>("Name");
+        TableColumn<GeneralExpenses,String> amount = new TableColumn<>("Amount");
+        TableColumn<GeneralExpenses, String> date = new TableColumn<>("Date");
+        TableColumn<GeneralExpenses, String> currency = new TableColumn<>("Currency");
+        table.getColumns().addAll(name,date,amount,currency);
+
+        name.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getName()));
+        amount.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getAmountS()));
+        currency.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCurrency()));
+        date.setCellValueFactory(data ->{
+            LocalDate localDate = data.getValue().getDate();
+            return new javafx.beans.property.SimpleStringProperty(localDate.toString());
+        });
+        for(GeneralExpenses ge : DataController.getInstance().getGeneralExpenses()){
+            if(ge.getType().equals("Expense")) if(ge.getDate().isBefore(LocalDate.now().plusMonths(1))) {
+                if(ge.getDate().isAfter(LocalDate.now())) table.getItems().add(ge);
+            }
+        }
+        for(Project p :DataController.getInstance().getProjetcs()){
+            for(Payment pa : p.getPayments())
+                if(pa.getDate().isBefore(LocalDate.now().plusMonths(1))){
+                    if(pa.getDate().isAfter(LocalDate.now())){
+                        table.getItems().add(new GeneralExpenses(pa.getName(),"",pa.getAmount(),pa.getCurrency(),pa.getDate()));
+                    }
+                }
+        }
+
+        Stage stage=new Stage();
+        Scene scene = new Scene(table, 400, 300);
+        stage.setScene(scene);
+        stage.setTitle("Income and Expenses Bar Chart");
+        stage.show();
+    }
+    @FXML
+    public void onGenerateTableButtonClicked(){
+        // Create the X-axis (Categories: Months)
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Month");
+
+        // Create the Y-axis (Values: Amounts)
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Amount");
+
+        // Create the BarChart
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Monthly Income and Expenses");
+
+        XYChart.Series<String, Number> incomeSeries = new XYChart.Series<>();
+        incomeSeries.setName("Income");
+        for(GeneralExpenses ge : DataController.getInstance().getGeneralExpenses()){
+            if(ge.getType().equals("Income")) {
+                incomeSeries.getData().add(new XYChart.Data<>(ge.getDate().getMonth().toString(), DataController.getInstance().changeCurrency(ge.getAmount(), ge.getCurrency(), "EUR")));
+            }
+        }
+
+        XYChart.Series<String, Number> expenseSeries = new XYChart.Series<>();
+        expenseSeries.setName("Expense");
+        for(GeneralExpenses ge : DataController.getInstance().getGeneralExpenses()){
+            if(ge.getType().equals("Expense"))  {
+                expenseSeries.getData().add(new XYChart.Data<>(ge.getDate().getMonth().toString(), DataController.getInstance().changeCurrency(ge.getAmount(), ge.getCurrency(), "EUR")));
+            }
+        }
+
+        barChart.getData().addAll(incomeSeries, expenseSeries);
+        Stage stage=new Stage();
+        Scene scene = new Scene(barChart, 1000, 800);
+        stage.setScene(scene);
+        stage.setTitle("Income and Expenses Bar Chart");
+        stage.show();
+
     }
 
     /**

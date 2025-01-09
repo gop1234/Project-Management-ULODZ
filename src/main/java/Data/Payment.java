@@ -3,6 +3,7 @@ package Data;
 import java.time.LocalDate;
 
 public class Payment {
+    private String name="";
     private LocalDate date;
     private float amount;
     private String currency;
@@ -29,5 +30,13 @@ public class Payment {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -36,6 +36,8 @@ public class GeneralExpensesController {
     @FXML
     private TableColumn<GeneralExpenses, String> date;
     @FXML
+    private TableColumn<GeneralExpenses, String> currencyCol;
+    @FXML
     private ComboBox<String> currency;
     @FXML
     private Label total;
@@ -47,6 +49,7 @@ public class GeneralExpensesController {
         name.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getName()));
         type.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getType()));
         amount.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getAmountS()));
+        currencyCol.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCurrency()));
         date.setCellValueFactory(data ->{
             LocalDate localDate = data.getValue().getDate();
             return new javafx.beans.property.SimpleStringProperty(localDate.toString());
@@ -77,9 +80,6 @@ public class GeneralExpensesController {
 
     @FXML
     public void onCurrencyComboBoxClicked(){
-        for(GeneralExpenses ge :expenses){
-            ge.setAmount(DataController.getInstance().changeCurrency(ge.getAmount(),usingCur,currency.getSelectionModel().getSelectedItem()));
-        }
         usingCur=currency.getSelectionModel().getSelectedItem();
         updateTable();
     }
@@ -97,14 +97,16 @@ public class GeneralExpensesController {
         nameField.setPromptText("Name");
 
         Label type = new Label("Type:");
-        TextField typeFiled = new TextField();
-        typeFiled.setPromptText("type");
+        ComboBox<String> typeFiled = new ComboBox<>();
+        typeFiled.getItems().addAll("Income","Expense");
 
         Label dateLabel = new Label("Date:");
         DatePicker datePicker = new DatePicker(LocalDate.now());
         datePicker.setEditable(false);
 
-        Label money = new Label("Amount ( "+this.usingCur+" ):");
+        Label money = new Label("Amount:");
+        ComboBox<String> cur = new ComboBox<>();
+        cur.getItems().addAll("EUR","USD","PLN");
         TextField moneyField = new TextField();
         moneyField.setPromptText("Amount");
         HBox buttonBox = new HBox(12);
@@ -114,13 +116,13 @@ public class GeneralExpensesController {
         });
         Button save = new Button("Save");
         save.setOnAction(event ->{
-            if(nameField.getText().isEmpty() || typeFiled.getText().isEmpty() || moneyField.getText().isEmpty()) return;
-            expenses.add(new GeneralExpenses(nameField.getText(),typeFiled.getText(),Float.parseFloat(moneyField.getText()),usingCur,datePicker.getValue()));
+            if(nameField.getText().isEmpty() || typeFiled.getSelectionModel().isEmpty() || moneyField.getText().isEmpty()) return;
+            expenses.add(new GeneralExpenses(nameField.getText(),typeFiled.getSelectionModel().getSelectedItem(),Float.parseFloat(moneyField.getText()),cur.getSelectionModel().getSelectedItem(),datePicker.getValue()));
             updateTable();
             stage.close();
         });
         buttonBox.getChildren().addAll(close,save);
-        expensesDetails.getChildren().addAll(name,nameField,type,typeFiled,dateLabel,datePicker,money,moneyField,buttonBox);
+        expensesDetails.getChildren().addAll(name,nameField,type,typeFiled,dateLabel,datePicker,money,cur,moneyField,buttonBox);
         stage.setScene(scene);
         stage.show();
     }
@@ -133,7 +135,8 @@ public class GeneralExpensesController {
     private void updateTable(){
         float t=0;
         for(GeneralExpenses ge:expenses){
-            t+=ge.getAmount();
+            if(ge.getType().equals("Income")) if(ge.getDate().isAfter(LocalDate.now())) t+=DataController.getInstance().changeCurrency(ge.getAmount(),ge.getCurrency(),usingCur);
+            else  t-=DataController.getInstance().changeCurrency(ge.getAmount(),ge.getCurrency(),usingCur);
         }
         total.setText(String.format("%.2f",t)+" "+usingCur);
         table.getItems().setAll(expenses);;

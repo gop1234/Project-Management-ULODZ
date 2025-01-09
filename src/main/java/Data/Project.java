@@ -11,6 +11,8 @@ public class Project {
     private ArrayList<String> categories;
     private float price;
 
+    private String currency;
+
     // Existing fields
     private ArrayList<IncomeExpense> incomeExpenses; // Here stores IncomeExpense info
 
@@ -21,6 +23,7 @@ public class Project {
 
 
     public Project(String name) {
+        this.currency="EUR";
         this.name = name;
         this.description = "";
         this.price = 0;
@@ -28,6 +31,17 @@ public class Project {
         this.categories = new ArrayList<>();
         this.incomeExpenses = new ArrayList<>();
         this.payments = new ArrayList<>(); // Initialize the payments list
+    }
+
+    public void updatePrice(){
+        price=0;
+        for(IncomeExpense ic:incomeExpenses){
+            if(ic.getType().equals("Income")) price+=DataController.getInstance().changeCurrency(ic.getAmount(),ic.getCurrency(),currency);
+            else price-=DataController.getInstance().changeCurrency(ic.getAmount(),ic.getCurrency(),currency);;
+        }
+        for(Payment p : payments){
+            price-=DataController.getInstance().changeCurrency(p.getAmount(),p.getCurrency(),currency);;
+        }
     }
 
     // Getters and setters
