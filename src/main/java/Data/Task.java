@@ -13,6 +13,7 @@ public class Task {
     private LocalDate endDate;
     private long duration;
     private float price;
+    private String currency;
     private Status status;
     private int nIssues = 0;
 
@@ -25,6 +26,7 @@ public class Task {
         this.nIssues=0;
         this.issues=new ArrayList<Issue>();
         this.price=0;
+        this.currency = "EUR";
     }
 
     public void update(Task t){
@@ -131,5 +133,13 @@ public class Task {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

@@ -150,6 +150,8 @@ public class TaskManagerController {
         TextField priceField = new TextField(String.valueOf(card.getPrice()));
         HBox priceBox = new HBox(12);
         priceBox.getChildren().addAll(priceLabel,priceField);
+        ComboBox<String> cur = new ComboBox<>();
+        cur.getItems().addAll("EUR","PLN","USD");
 
         HBox buttonsBox = new HBox(12); // Espaciado entre los botones
         buttonsBox.setStyle("-fx-alignment: center;"); // Alineación centrada de los botones
@@ -161,6 +163,7 @@ public class TaskManagerController {
             card.setDuration(Long.parseLong(durationN.getText()));
             card.setPrice(Float.parseFloat(priceField.getText()));
             card.setExpirationDate(card.getCreationDate().plusDays(card.getDuration()));
+            card.setCurrency(cur.getSelectionModel().getSelectedItem());
             stage.close();
         });
 
@@ -182,7 +185,7 @@ public class TaskManagerController {
 
 
         // Añadir los elementos al VBox
-        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel,startDatePicker,endDateLabel, durationBox,priceBox, buttonsBox);
+        detailsBox.getChildren().addAll(nameField, descriptionArea, creationDateLabel,startDatePicker,endDateLabel, durationBox,priceBox,cur, buttonsBox);
 
         // Mostrar la ventana emergente
         stage.setScene(scene);
@@ -276,81 +279,14 @@ public class TaskManagerController {
                 t.setStartDate(c.getCreationDate());
                 t.setEndDate(c.getExpirationDate());
                 t.setPrice(c.getPrice());
+                t.setCurrency(c.getCurrency());
                 temp.add(t);
             }
         }
         project.updateCategory(stemp);
         project.updateTasks(temp);
     }
-    @FXML
-    public void onCreateGaantchartButtonClicked(){
-        if(project.getTasks().isEmpty()) return;
-        NumberAxis xAxis = new NumberAxis();
-        xAxis.setLabel("Days from Start of Project");
 
-        // Y-axis: Tasks
-        CategoryAxis yAxis = new CategoryAxis();
-        yAxis.setLabel("Tasks");
-
-        // Create StackedBarChart
-        StackedBarChart<Number, String> ganttChart = new StackedBarChart<>(xAxis, yAxis);
-        ganttChart.setTitle("Gantt Chart ");
-
-
-        LocalDate projectStart = project.getTasks().get(0).getStartDate();// Project start reference point
-        for(int i=0;i<project.getTasks().size();i++){
-            for(Task t : project.getTasks()){
-                if(projectStart.isAfter(t.getStartDate())) projectStart=t.getStartDate();
-            }
-        }
-
-
-        for(Task t : project.getTasks()){
-            XYChart.Series<Number,String> xy = createInvisibleSeries(t,projectStart);
-            xy.getNode().setStyle("-fx-bar-fill: #000000;");
-            ganttChart.getData().add(xy);
-            ganttChart.getData().add(createVisibleSeries(t,projectStart));
-        }
-
-
-        Stage stage=new Stage();
-        Scene scene = new Scene(ganttChart, 900, 700);
-        stage.setTitle("Gantt Chart");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    // Helper method to create an invisible padding series for offset
-    private XYChart.Series<Number, String> createInvisibleSeries(Task task, LocalDate projectStart) {
-        XYChart.Series<Number, String> series = new XYChart.Series<>();
-        series.setName(""); // Invisible series (no label)
-
-        long startOffset = ChronoUnit.DAYS.between(projectStart, task.getStartDate());
-        series.getData().add(new XYChart.Data<>(startOffset, task.getName())); // Invisible padding
-        return series;
-    }
-
-    // Helper method to create a visible series for task duration
-    private XYChart.Series<Number, String> createVisibleSeries(Task task, LocalDate projectStart) {
-        XYChart.Series<Number, String> series = new XYChart.Series<>();
-        series.setName(task.getName()); // Task name as label
-
-        long duration = ChronoUnit.DAYS.between(task.getStartDate(), task.getEndDate());
-
-        series.getData().add(new XYChart.Data<>(duration, task.getName())); // Actual task duration
-        return series;
-    }
-    private XYChart.Series<Number, String> createTaskSeries(Task task, LocalDate projectStart) {
-        XYChart.Series<Number, String> series = new XYChart.Series<>();
-        series.setName(task.getName());
-
-        long startOffset = ChronoUnit.DAYS.between(projectStart, task.getStartDate());
-        long duration = ChronoUnit.DAYS.between(task.getStartDate(), task.getEndDate());
-
-        series.getData().add(new XYChart.Data<>(startOffset, task.getName(), duration));
-
-        return series;
-    }
 
 
 
