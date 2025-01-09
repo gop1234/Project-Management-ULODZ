@@ -18,7 +18,8 @@ public class DataController {
     private DataController(){
         projetcs= new ArrayList<Project>();
         generalExpenses = new ArrayList<GeneralExpenses>();
-        generalExpenses.add(new GeneralExpenses("h","d",200,"PLN", LocalDate.now()));
+        generateData();
+
     }
 
     public static DataController getInstance() {
@@ -31,7 +32,25 @@ public class DataController {
     /**
      * Function to generate sample data*/
     public void generateData(){
+        for(int i= 1; i <=12;i++){
+            generalExpenses.add(new GeneralExpenses("Office rent", "Rent",450,"EUR",LocalDate.of(2025,i,27)));
+            generalExpenses.add(new GeneralExpenses("Salary person 1", "Salary",2500,"EUR",LocalDate.of(2025,i,1)));
+            generalExpenses.add(new GeneralExpenses("Salary person 2", "Salary",1500,"EUR",LocalDate.of(2025,i,1)));
+        }
+        generalExpenses.add(new GeneralExpenses("Software License", "Applications",2500,"EUR",LocalDate.of(2025,12,31)));
 
+        Project p1 = new Project("Shoping Aplication");
+        p1.setDescription("""
+                Shoping web Aplication for inditex 
+                Create a new aplication for web shopping 
+                """);
+        projetcs.add(p1);
+
+        Project p2 = new Project("Project Management Tool");
+        p1.setDescription("""
+                Create a new Management tool for Trello
+                Improve Trello jira by creating a new version with new features.
+                """);
     }
 
     public float changeCurrency(float amount,String old, String newC){
