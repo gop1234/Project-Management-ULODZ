@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="327.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project_management.management.GeneralExpensesController">
+   <children>
+      <TableView fx:id="table" layoutX="40.0" layoutY="29.0" prefHeight="280.0" prefWidth="378.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="type" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="amount" prefWidth="75.0" text="Amount" />
+        </columns>
+      </TableView>
+      <Button layoutX="456.0" layoutY="29.0" mnemonicParsing="false" onAction="#onAddButtonClicked" text="Add" />
+      <Button layoutX="453.0" layoutY="69.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" text="Delete" />
+      <Label layoutX="453.0" layoutY="195.0" text="Total:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="449.0" layoutY="283.0" mnemonicParsing="false" onAction="#onReturnButtonCLick" text="Return" />
+      <Label layoutX="434.0" layoutY="109.0" text="Select Currency" />
+      <ComboBox fx:id="currency" layoutX="433.0" layoutY="150.0" onAction="#onCurrencyComboBoxClicked" prefHeight="26.0" prefWidth="90.0" />
+      <Label fx:id="total" layoutX="449.0" layoutY="230.0" text="Money">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

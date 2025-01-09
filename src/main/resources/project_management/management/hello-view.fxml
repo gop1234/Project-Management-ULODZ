@@ -24,6 +24,7 @@
          <Label layoutY="256.0" text="Name:" />
          <TextField fx:id="projectName" layoutX="35.0" layoutY="252.0" />
          <Button layoutX="380.0" layoutY="267.0" mnemonicParsing="false" onAction="#onlogoutButtonCliked" text="Logout" />
+         <Button layoutX="208.0" layoutY="222.0" mnemonicParsing="false" onAction="#onGeneralExpensesButtonClicked" text="General Expenses" />
       </children>
    </AnchorPane>
 

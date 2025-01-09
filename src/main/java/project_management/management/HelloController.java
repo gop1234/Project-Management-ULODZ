@@ -106,6 +106,18 @@ public class HelloController {
         System.out.println("Logged out.");
     }
 
+    @FXML
+    public void onGeneralExpensesButtonClicked(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneralExpenses-view.fxml"));
+        parent = loader.load();
+        GeneralExpensesController controller = loader.getController();
+        controller.loadWindow();
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     /**
      * Function that must be used every time we load the window.
      * Information is stored in DataController, so must be loaded into the window.
